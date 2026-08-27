@@ -6,6 +6,8 @@ export default defineConfig({
     include: ["tests/**/*.test.ts"],
     environment: "node",
     testTimeout: 30000,
+    // integration files share one test DB; parallel workers race on resetDatabase
+    fileParallelism: false,
   },
   resolve: {
     alias: { "@": path.resolve(process.cwd(), "src") },
