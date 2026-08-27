@@ -1,6 +1,7 @@
 {
   "name": "buwis-brain",
   "private": true,
+  "engines": { "node": ">=22.9" },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -8,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "migrate": "tsx scripts/migrate.ts",
+    "migrate": "tsx --env-file-if-exists=.env.local scripts/migrate.ts",
     "latency": "tsx scripts/latency.ts"
   },
   "dependencies": {

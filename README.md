@@ -72,7 +72,8 @@ Integration suites skip automatically when `DATABASE_URL_TEST` is unset.
 ## Deploy runbook (Vercel + Neon)
 
 1. Create a Neon project and copy the pooled connection string.
-2. Run `npm run migrate` locally with `DATABASE_URL` pointed at Neon.
+2. Run `npm run migrate` with `DATABASE_URL` pointed at Neon, set in your
+   shell or in `.env.local` (the migrate script reads that file as well).
 3. Import the GitHub repo into Vercel, set all env vars above except
    `DATABASE_URL_TEST`, then deploy.
 4. Visit `/upload`, enter `INGEST_TOKEN`, ingest the corpus PDFs.
@@ -95,6 +96,12 @@ provider mismatch). Switching providers requires a re-ingest.
 
 Synchronous ingest fits a 300 s function for 50-page documents. Larger
 corpora would need job-based ingestion, which was deferred on purpose.
+
+One more deploy note: Vercel rejects request bodies over about 4.5 MB
+before the ingest route even runs, so the practical upload cap there is
+4.5 MB, not the 20 MB the code allows. Use text-based PDFs and split
+anything bigger. Scanned image-only PDFs fail anyway since there is no
+text to extract.
 
 ## Acceptance criteria and how to verify them
 
