@@ -3,7 +3,7 @@ import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { answerEffort, answerModel } from "../env";
 import type { RetrievedChunk } from "../retrieval/types";
 import { buildUserMessage, SYSTEM_PROMPT } from "./prompt";
-import { ModelAnswerSchema, type ModelAnswer } from "./schema";
+import { ModelAnswerSchema, type ModelAnswer, type UsageInfo } from "./schema";
 
 export class SynthesisError extends Error {
   constructor(message: string, options?: ErrorOptions) {
@@ -45,15 +45,18 @@ export async function synthesize(
       { cause: err },
     );
   }
+  const usage: UsageInfo | undefined = response.usage
+    ? { model: response.model, inputTokens: response.usage.input_tokens, outputTokens: response.usage.output_tokens }
+    : undefined;
   if (response.stop_reason === "refusal") {
-    return { refused: true, reason: "model_declined", answer: null, citations: [] };
+    return { refused: true, reason: "model_declined", answer: null, citations: [], ...(usage ? { usage } : {}) };
   }
   const text = response.content.find(
     (b): b is Anthropic.Beta.BetaTextBlock => b.type === "text",
   )?.text;
   if (!text) throw new SynthesisError("Model returned no text content");
   try {
-    return ModelAnswerSchema.parse(JSON.parse(text));
+    return { ...ModelAnswerSchema.parse(JSON.parse(text)), ...(usage ? { usage } : {}) };
   } catch (err) {
     throw new SynthesisError(
       `Model output did not match schema: ${err instanceof Error ? err.message : String(err)}`,

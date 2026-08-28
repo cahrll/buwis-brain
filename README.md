@@ -33,8 +33,10 @@ always carries at least one real citation.
 embedding provider.
 
 Pass `"debug": true` to `/api/ask` to get read-only retrieval
-diagnostics (per-chunk leg ranks, similarity, RRF score, gate values),
-on refusals as well. This is the hook for the eval harness milestone.
+diagnostics, on refusals as well: per-chunk document title, leg ranks,
+similarity and RRF score, the gate values, and `usage` with the answer
+model and its input and output tokens (`null` when the gate refused
+before any model call). This is the hook the eval harness drives.
 
 ## Local development
 

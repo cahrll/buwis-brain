@@ -94,6 +94,22 @@ describe.skipIf(!process.env.DATABASE_URL_TEST)("askQuestion", () => {
     expect(d).toHaveProperty("keywordRank");
     expect(d).toHaveProperty("similarity");
     expect(d).toHaveProperty("rrfScore");
+    expect(d.documentTitle).toBe("BIR Guide");
+    expect(out.diagnostics!.usage).toBeNull();
+  });
+
+  it("reports model usage in diagnostics when synthesis ran", async () => {
+    const synthesizeFn = answerFake({
+      refused: false, reason: null, answer: "Yes [1].", citations: [1],
+      usage: { model: "claude-opus-5", inputTokens: 1500, outputTokens: 60 },
+    });
+    const out = await askQuestion(
+      { pool, provider, synthesizeFn },
+      { question: ON_CORPUS_Q, debug: true },
+    );
+    expect(out.refused).toBe(false);
+    expect(out.diagnostics!.usage).toEqual({ model: "claude-opus-5", inputTokens: 1500, outputTokens: 60 });
+    expect(out.diagnostics!.chunks.every((c) => c.documentTitle === "BIR Guide")).toBe(true);
   });
 
   it("applies the reconciliation downgrade to unsupported answers", async () => {

@@ -7,4 +7,10 @@ export const ModelAnswerSchema = z.object({
   citations: z.array(z.number().int()),
 });
 
-export type ModelAnswer = z.infer<typeof ModelAnswerSchema>;
+export interface UsageInfo {
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+}
+
+export type ModelAnswer = z.infer<typeof ModelAnswerSchema> & { usage?: UsageInfo };

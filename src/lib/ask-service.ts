@@ -1,5 +1,6 @@
 import type { Pool } from "pg";
 import { reconcileCitations } from "./answer/validate-citations";
+import type { UsageInfo } from "./answer/schema";
 import type { SynthesizeFn } from "./answer/synthesize";
 import type { EmbeddingProvider } from "./embeddings/provider";
 import { simFloor } from "./env";
@@ -36,6 +37,7 @@ export interface CitationOut {
 export interface DiagnosticsOut {
   chunks: {
     chunkId: string;
+    documentTitle: string;
     vectorRank: number | null;
     keywordRank: number | null;
     similarity: number | null;
@@ -43,6 +45,7 @@ export interface DiagnosticsOut {
   }[];
   bestSimilarity: number;
   simFloor: number;
+  usage: UsageInfo | null;
 }
 
 export interface AskResponseBody {
@@ -76,6 +79,7 @@ export async function askQuestion(deps: AskDeps, input: AskInput): Promise<AskRe
     ? {
         chunks: top.map((e) => ({
           chunkId: e.id,
+          documentTitle: byId.get(e.id)!.documentTitle,
           vectorRank: e.vectorRank,
           keywordRank: e.keywordRank,
           similarity: simById.get(e.id) ?? null,
@@ -83,6 +87,7 @@ export async function askQuestion(deps: AskDeps, input: AskInput): Promise<AskRe
         })),
         bestSimilarity,
         simFloor: floor,
+        usage: null,
       }
     : undefined;
 
@@ -100,6 +105,7 @@ export async function askQuestion(deps: AskDeps, input: AskInput): Promise<AskRe
 
   const contextChunks = top.map((e) => byId.get(e.id)!);
   const model = await deps.synthesizeFn(contextChunks, input.question);
+  if (diagnostics) diagnostics.usage = model.usage ?? null;
   const reconciled = reconcileCitations(model, contextChunks.length);
   const citations: CitationOut[] = reconciled.citations.map((n) => {
     const c = contextChunks[n - 1];
