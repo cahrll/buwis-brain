@@ -1,0 +1,281 @@
+[
+  {
+    "questionId": "q-hit", "run": 1, "category": "on_corpus_bir", "expected": "answer", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "Yes [1].", "citedDocs": ["doc-a"], "retrievedDocs": ["doc-a", "doc-b"],
+    "bestSimilarity": 0.62, "latencyMs": 8000, "roundTripMs": 8200,
+    "usage": { "model": "claude-opus-5", "inputTokens": 5000, "outputTokens": 300 }, "usd": 0.0325, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "Yes [1].",
+      "citations": [ { "index": 1, "chunkId": "ca", "documentTitle": "Doc A", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "a" } ],
+      "latencyMs": 8000,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.62, "rrfScore": 0.0164 },
+          { "chunkId": "cb", "documentTitle": "Doc B", "vectorRank": 2, "keywordRank": 1, "similarity": 0.5, "rrfScore": 0.032 }
+        ],
+        "bestSimilarity": 0.62, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 5000, "outputTokens": 300 }
+      }
+    }
+  },
+  {
+    "questionId": "q-hit", "run": 2, "category": "on_corpus_bir", "expected": "answer", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "Yes [1].", "citedDocs": ["doc-a"], "retrievedDocs": ["doc-a", "doc-b"],
+    "bestSimilarity": 0.60, "latencyMs": 7000, "roundTripMs": 7200,
+    "usage": { "model": "claude-opus-5", "inputTokens": 5000, "outputTokens": 280 }, "usd": 0.032, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "Yes [1].",
+      "citations": [ { "index": 1, "chunkId": "ca", "documentTitle": "Doc A", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "a" } ],
+      "latencyMs": 7000,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.60, "rrfScore": 0.0164 },
+          { "chunkId": "cb", "documentTitle": "Doc B", "vectorRank": 2, "keywordRank": 1, "similarity": 0.5, "rrfScore": 0.032 }
+        ],
+        "bestSimilarity": 0.60, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 5000, "outputTokens": 280 }
+      }
+    }
+  },
+  {
+    "questionId": "q-multi", "run": 1, "category": "deep_nirc", "expected": "answer", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "A [1].", "citedDocs": ["doc-a"], "retrievedDocs": ["doc-a"],
+    "bestSimilarity": 0.55, "latencyMs": 9000, "roundTripMs": 9200,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 200 }, "usd": 0.025, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "A [1].",
+      "citations": [ { "index": 1, "chunkId": "ca", "documentTitle": "Doc A", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "a" } ],
+      "latencyMs": 9000,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.55, "rrfScore": 0.0164 }
+        ],
+        "bestSimilarity": 0.55, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 200 }
+      }
+    }
+  },
+  {
+    "questionId": "q-multi", "run": 2, "category": "deep_nirc", "expected": "answer", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "A [1] B [2].", "citedDocs": ["doc-a", "doc-b"], "retrievedDocs": ["doc-a", "doc-b"],
+    "bestSimilarity": 0.56, "latencyMs": 9500, "roundTripMs": 9700,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 220 }, "usd": 0.0255, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "A [1] B [2].",
+      "citations": [
+        { "index": 1, "chunkId": "ca", "documentTitle": "Doc A", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "a" },
+        { "index": 2, "chunkId": "cb", "documentTitle": "Doc B", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "b" }
+      ],
+      "latencyMs": 9500,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.56, "rrfScore": 0.0164 },
+          { "chunkId": "cb", "documentTitle": "Doc B", "vectorRank": 2, "keywordRank": null, "similarity": 0.5, "rrfScore": 0.032 }
+        ],
+        "bestSimilarity": 0.56, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 220 }
+      }
+    }
+  },
+  {
+    "questionId": "q-refuse-gate", "run": 1, "category": "off_corpus", "expected": "refuse", "outcome": "refused_gate",
+    "refused": true, "reason": "low_confidence", "answer": null, "citedDocs": [], "retrievedDocs": ["doc-b"],
+    "bestSimilarity": 0.15, "latencyMs": 900, "roundTripMs": 1100,
+    "usage": null, "usd": 0, "error": null,
+    "response": {
+      "refused": true, "reason": "low_confidence", "answer": null, "citations": [],
+      "latencyMs": 900,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "cb", "documentTitle": "Doc B", "vectorRank": 1, "keywordRank": null, "similarity": 0.15, "rrfScore": 0.032 }
+        ],
+        "bestSimilarity": 0.15, "simFloor": 0.3,
+        "usage": null
+      }
+    }
+  },
+  {
+    "questionId": "q-refuse-gate", "run": 2, "category": "off_corpus", "expected": "refuse", "outcome": "refused_gate",
+    "refused": true, "reason": "low_confidence", "answer": null, "citedDocs": [], "retrievedDocs": ["doc-b"],
+    "bestSimilarity": 0.16, "latencyMs": 800, "roundTripMs": 1000,
+    "usage": null, "usd": 0, "error": null,
+    "response": {
+      "refused": true, "reason": "low_confidence", "answer": null, "citations": [],
+      "latencyMs": 800,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "cb", "documentTitle": "Doc B", "vectorRank": 1, "keywordRank": null, "similarity": 0.16, "rrfScore": 0.032 }
+        ],
+        "bestSimilarity": 0.16, "simFloor": 0.3,
+        "usage": null
+      }
+    }
+  },
+  {
+    "questionId": "q-refuse-model", "run": 1, "category": "off_corpus", "expected": "refuse", "outcome": "refused_model",
+    "refused": true, "reason": "outside the scope of the passages", "answer": null, "citedDocs": [], "retrievedDocs": ["doc-a"],
+    "bestSimilarity": 0.39, "latencyMs": 5000, "roundTripMs": 5200,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4500, "outputTokens": 40 }, "usd": 0.0235, "error": null,
+    "response": {
+      "refused": true, "reason": "outside the scope of the passages", "answer": null, "citations": [],
+      "latencyMs": 5000,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.39, "rrfScore": 0.0164 }
+        ],
+        "bestSimilarity": 0.39, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4500, "outputTokens": 40 }
+      }
+    }
+  },
+  {
+    "questionId": "q-refuse-model", "run": 2, "category": "off_corpus", "expected": "refuse", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "Guess [1].", "citedDocs": ["doc-a"], "retrievedDocs": ["doc-a"],
+    "bestSimilarity": 0.40, "latencyMs": 6000, "roundTripMs": 6200,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4500, "outputTokens": 150 }, "usd": 0.02625, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "Guess [1].",
+      "citations": [ { "index": 1, "chunkId": "ca", "documentTitle": "Doc A", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "a" } ],
+      "latencyMs": 6000,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.40, "rrfScore": 0.0164 }
+        ],
+        "bestSimilarity": 0.40, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4500, "outputTokens": 150 }
+      }
+    }
+  },
+  {
+    "questionId": "q-false-refusal", "run": 1, "category": "on_corpus_sss", "expected": "answer", "outcome": "refused_model",
+    "refused": true, "reason": "unsupported_answer", "answer": null, "citedDocs": [], "retrievedDocs": ["doc-b"],
+    "bestSimilarity": 0.45, "latencyMs": 5500, "roundTripMs": 5700,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4200, "outputTokens": 60 }, "usd": 0.0225, "error": null,
+    "response": {
+      "refused": true, "reason": "unsupported_answer", "answer": null, "citations": [],
+      "latencyMs": 5500,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "cb", "documentTitle": "Doc B", "vectorRank": 2, "keywordRank": null, "similarity": 0.45, "rrfScore": 0.032 }
+        ],
+        "bestSimilarity": 0.45, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4200, "outputTokens": 60 }
+      }
+    }
+  },
+  {
+    "questionId": "q-false-refusal", "run": 2, "category": "on_corpus_sss", "expected": "answer", "outcome": "refused_gate",
+    "refused": true, "reason": "low_confidence", "answer": null, "citedDocs": [], "retrievedDocs": ["doc-a"],
+    "bestSimilarity": 0.25, "latencyMs": 950, "roundTripMs": 1150,
+    "usage": null, "usd": 0, "error": null,
+    "response": {
+      "refused": true, "reason": "low_confidence", "answer": null, "citations": [],
+      "latencyMs": 950,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.25, "rrfScore": 0.0164 }
+        ],
+        "bestSimilarity": 0.25, "simFloor": 0.3,
+        "usage": null
+      }
+    }
+  },
+  {
+    "questionId": "q-either", "run": 1, "category": "borderline", "expected": "either", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "Maybe [1].", "citedDocs": ["doc-a"], "retrievedDocs": ["doc-a"],
+    "bestSimilarity": 0.50, "latencyMs": 6500, "roundTripMs": 6700,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 100 }, "usd": 0.0225, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "Maybe [1].",
+      "citations": [ { "index": 1, "chunkId": "ca", "documentTitle": "Doc A", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "a" } ],
+      "latencyMs": 6500,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.50, "rrfScore": 0.0164 }
+        ],
+        "bestSimilarity": 0.50, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 100 }
+      }
+    }
+  },
+  {
+    "questionId": "q-either", "run": 2, "category": "borderline", "expected": "either", "outcome": "refused_model",
+    "refused": true, "reason": "not_answerable", "answer": null, "citedDocs": [], "retrievedDocs": ["doc-a"],
+    "bestSimilarity": 0.50, "latencyMs": 5200, "roundTripMs": 5400,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 30 }, "usd": 0.02075, "error": null,
+    "response": {
+      "refused": true, "reason": "not_answerable", "answer": null, "citations": [],
+      "latencyMs": 5200,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.50, "rrfScore": 0.0164 }
+        ],
+        "bestSimilarity": 0.50, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 30 }
+      }
+    }
+  },
+  {
+    "questionId": "q-trap", "run": 1, "category": "currency_trap", "expected": "answer", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "The fee is 500 pesos [1].", "citedDocs": ["doc-a"], "retrievedDocs": ["doc-a"],
+    "bestSimilarity": 0.58, "latencyMs": 7000, "roundTripMs": 7200,
+    "usage": { "model": "claude-mystery-9", "inputTokens": 4000, "outputTokens": 100 }, "usd": null, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "The fee is 500 pesos [1].",
+      "citations": [ { "index": 1, "chunkId": "ca", "documentTitle": "Doc A", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "a" } ],
+      "latencyMs": 7000,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.58, "rrfScore": 0.0164 }
+        ],
+        "bestSimilarity": 0.58, "simFloor": 0.3,
+        "usage": { "model": "claude-mystery-9", "inputTokens": 4000, "outputTokens": 100 }
+      }
+    }
+  },
+  {
+    "questionId": "q-trap", "run": 2, "category": "currency_trap", "expected": "answer", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "The fee is 500 pesos [1].", "citedDocs": ["doc-a"], "retrievedDocs": ["doc-a"],
+    "bestSimilarity": 0.57, "latencyMs": 7100, "roundTripMs": 7300,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 100 }, "usd": 0.0225, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "The fee is 500 pesos [1].",
+      "citations": [ { "index": 1, "chunkId": "ca", "documentTitle": "Doc A", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "a" } ],
+      "latencyMs": 7100,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.57, "rrfScore": 0.0164 },
+          { "chunkId": "cg", "documentTitle": "Ghost Doc", "vectorRank": 2, "keywordRank": null, "similarity": 0.4, "rrfScore": 0.0161 }
+        ],
+        "bestSimilarity": 0.57, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 100 }
+      }
+    }
+  },
+  {
+    "questionId": "q-error", "run": 1, "category": "on_corpus_bir", "expected": "answer", "outcome": "error",
+    "refused": null, "reason": null, "answer": null, "citedDocs": [], "retrievedDocs": [],
+    "bestSimilarity": null, "latencyMs": null, "roundTripMs": 60000,
+    "usage": null, "usd": null, "error": "HTTP 502: {\"error\":\"answering failed\"}",
+    "response": null
+  },
+  {
+    "questionId": "q-error", "run": 2, "category": "on_corpus_bir", "expected": "answer", "outcome": "answered",
+    "refused": false, "reason": null, "answer": "B [2].", "citedDocs": ["doc-b"], "retrievedDocs": ["doc-a", "doc-b"],
+    "bestSimilarity": 0.59, "latencyMs": 7000, "roundTripMs": 7200,
+    "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 100 }, "usd": 0.0225, "error": null,
+    "response": {
+      "refused": false, "reason": null, "answer": "B [2].",
+      "citations": [ { "index": 2, "chunkId": "cb", "documentTitle": "Doc B", "pageStart": 1, "pageEnd": 1, "heading": null, "content": "b" } ],
+      "latencyMs": 7000,
+      "diagnostics": {
+        "chunks": [
+          { "chunkId": "ca", "documentTitle": "Doc A", "vectorRank": 1, "keywordRank": null, "similarity": 0.59, "rrfScore": 0.0164 },
+          { "chunkId": "cb", "documentTitle": "Doc B", "vectorRank": 2, "keywordRank": null, "similarity": 0.5, "rrfScore": 0.032 }
+        ],
+        "bestSimilarity": 0.59, "simFloor": 0.3,
+        "usage": { "model": "claude-opus-5", "inputTokens": 4000, "outputTokens": 100 }
+      }
+    }
+  }
+]

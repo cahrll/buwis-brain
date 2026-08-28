@@ -1,0 +1,4 @@
+{
+  "doc-a": { "title": "Doc A", "agency": "BIR", "short": "A" },
+  "doc-b": { "title": "Doc B", "agency": "SSS", "short": "B" }
+}

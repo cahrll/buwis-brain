@@ -1,0 +1,13 @@
+{
+  "version": "fixture.1",
+  "entries": [
+    { "id": "q-hit", "question": "Hit?", "category": "on_corpus_bir", "expected": "answer", "expectedDocs": ["doc-a"], "split": "test", "tags": ["t1"] },
+    { "id": "q-multi", "question": "Multi?", "category": "deep_nirc", "expected": "answer", "expectedDocs": ["doc-a", "doc-b"], "split": "test" },
+    { "id": "q-refuse-gate", "question": "Gate?", "category": "off_corpus", "expected": "refuse", "split": "test" },
+    { "id": "q-refuse-model", "question": "Model?", "category": "off_corpus", "expected": "refuse", "split": "test", "tags": ["near-domain"] },
+    { "id": "q-false-refusal", "question": "False?", "category": "on_corpus_sss", "expected": "answer", "expectedDocs": ["doc-b"], "split": "dev" },
+    { "id": "q-either", "question": "Either?", "category": "borderline", "expected": "either", "expectedDocs": ["doc-a"], "split": "test" },
+    { "id": "q-trap", "question": "Trap?", "category": "currency_trap", "expected": "answer", "expectedDocs": ["doc-a"], "split": "test", "currencyTrap": true, "supersededBy": { "rule": "RA 11976", "effective": "2024-01-22", "change": "fee abolished" } },
+    { "id": "q-error", "question": "Error?", "category": "on_corpus_bir", "expected": "answer", "expectedDocs": ["doc-a"], "split": "test" }
+  ]
+}
