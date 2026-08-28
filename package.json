@@ -10,7 +10,9 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "migrate": "tsx --env-file-if-exists=.env.local scripts/migrate.ts",
-    "latency": "tsx scripts/latency.ts"
+    "latency": "tsx scripts/latency.ts",
+    "eval": "tsx evals/src/cli.ts run",
+    "eval:score": "tsx evals/src/cli.ts score"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.121.0",
