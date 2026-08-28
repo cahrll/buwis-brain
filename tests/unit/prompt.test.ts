@@ -12,6 +12,7 @@ describe("prompt", () => {
     expect(SYSTEM_PROMPT).toMatch(/only.*context/i);
     expect(SYSTEM_PROMPT).toMatch(/refus/i);
     expect(SYSTEM_PROMPT).toMatch(/\[n\]/);
+    expect(SYSTEM_PROMPT).toMatch(/at most 150 words/);
   });
 
   it("numbers chunks from 1 with page metadata", () => {

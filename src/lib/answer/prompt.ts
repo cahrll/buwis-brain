@@ -6,7 +6,7 @@ Rules:
 - Answer ONLY from the numbered context passages provided. Never use outside knowledge, even when you know the answer.
 - Cite every factual claim with an inline marker [n] referring to the context passage number it came from, and list every number you relied on in the citations array.
 - If the context does not actually answer the question, refuse: set refused to true, give a short reason, set answer to null, and leave citations empty.
-- Keep answers concise and practical. Use markdown. This is general guidance, not professional tax advice.`;
+- Keep answers short: at most 150 words. Lead with the direct answer, then only the conditions that change it. Use markdown only for a short list, never headings. This is general guidance, not professional tax advice.`;
 
 export function buildUserMessage(chunks: RetrievedChunk[], question: string): string {
   const context = chunks
