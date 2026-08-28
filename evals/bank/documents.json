@@ -1,0 +1,10 @@
+{
+  "ra-8424": { "title": "Republic Act No. 8424 (National Internal Revenue Code of 1997)", "agency": "BIR", "short": "NIRC" },
+  "ra-10963": { "title": "Republic Act No. 10963 (TRAIN Law)", "agency": "BIR", "short": "TRAIN" },
+  "rr-8-2018": { "title": "BIR Revenue Regulations No. 8-2018", "agency": "BIR", "short": "RR 8-2018" },
+  "rr-8-2018-digest": { "title": "Digest of BIR Revenue Regulations No. 8-2018", "agency": "BIR", "short": "RR 8-2018 digest" },
+  "ra-11199-irr": { "title": "IRR of Republic Act No. 11199 (Social Security Act of 2018)", "agency": "SSS", "short": "SSS IRR" },
+  "ra-11223": { "title": "Republic Act No. 11223 (Universal Health Care Act)", "agency": "PhilHealth", "short": "UHC Act" },
+  "ra-9679": { "title": "Republic Act No. 9679 (Pag-IBIG Fund Law of 2009)", "agency": "Pag-IBIG", "short": "Pag-IBIG law" },
+  "ra-9679-irr": { "title": "IRR of Republic Act No. 9679 (Pag-IBIG Fund Law)", "agency": "Pag-IBIG", "short": "Pag-IBIG IRR" }
+}

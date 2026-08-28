@@ -1,6 +1,7 @@
+import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { crossCheck, hashBank, mapTitles, parseBank, selectEntries } from "../../evals/src/bank";
-import { DocumentRegistrySchema, QuestionBankSchema } from "../../evals/src/types";
+import { crossCheck, hashBank, loadBank, mapTitles, parseBank, selectEntries } from "../../evals/src/bank";
+import { CATEGORIES, DocumentRegistrySchema, QuestionBankSchema } from "../../evals/src/types";
 
 const documents = JSON.stringify({
   "ra-8424": { title: "Republic Act No. 8424", agency: "BIR", short: "NIRC" },
@@ -56,5 +57,32 @@ describe("mapTitles", () => {
     const { titleToKey } = parseBank(documents, questions);
     const out = mapTitles(["Republic Act No. 8424", "Mystery", "Republic Act No. 8424", "Mystery"], titleToKey);
     expect(out).toEqual({ keys: ["ra-8424"], unknown: ["Mystery"] });
+  });
+});
+
+describe("committed bank", () => {
+  const loaded = loadBank(path.join(process.cwd(), "evals", "bank"));
+  const entries = loaded.bank.entries;
+
+  it("has at least 40 entries and a version", () => {
+    expect(entries.length).toBeGreaterThanOrEqual(40);
+    expect(loaded.bank.version).toMatch(/^\d{4}-\d{2}-\d{2}\.\d+$/);
+  });
+  it("covers every category with at least one dev entry each", () => {
+    for (const category of CATEGORIES) {
+      const inCategory = entries.filter((e) => e.category === category);
+      expect(inCategory.length, category).toBeGreaterThan(0);
+      expect(inCategory.some((e) => e.split === "dev"), `${category} needs a dev entry`).toBe(true);
+    }
+  });
+  it("keeps the dev share near 30 percent", () => {
+    const dev = entries.filter((e) => e.split === "dev").length / entries.length;
+    expect(dev).toBeGreaterThanOrEqual(0.2);
+    expect(dev).toBeLessThanOrEqual(0.4);
+  });
+  it("registers all eight production documents", () => {
+    expect(Object.keys(loaded.documents).sort()).toEqual([
+      "ra-10963", "ra-11199-irr", "ra-11223", "ra-8424", "ra-9679", "ra-9679-irr", "rr-8-2018", "rr-8-2018-digest",
+    ]);
   });
 });
