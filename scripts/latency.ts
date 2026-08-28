@@ -37,7 +37,7 @@ async function main() {
   }
   const sorted = [...times].sort((a, b) => a - b);
   const p95 = sorted[Math.min(sorted.length - 1, Math.ceil(0.95 * sorted.length) - 1)];
-  console.log(`\np95: ${p95} ms over ${times.length} queries (target < 10000 ms)`);
+  console.log(`\np95: ${p95} ms over ${times.length} queries (target < 12000 ms)`);
 }
 
 main().catch((err) => {

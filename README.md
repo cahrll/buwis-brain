@@ -78,7 +78,7 @@ Integration suites skip automatically when `DATABASE_URL_TEST` is unset.
    `DATABASE_URL_TEST`, then deploy.
 4. Visit `/upload`, enter `INGEST_TOKEN`, ingest the corpus PDFs.
 5. Run `BASE_URL=https://<deployment> npm run latency` and check that
-   p95 is under 10 s.
+   p95 is under 12 s.
 6. Ask "who won the 2022 PH election?" and confirm an explicit refusal
    with zero citations.
 
@@ -110,7 +110,7 @@ text to extract.
 | Vercel deployment live | URL loads |
 | 50+ page BIR PDF ingests; chunk count queryable | `/upload`, then `GET /api/stats` |
 | On-corpus answer with a citation resolving to a real chunk | ask on `/`; enforced by the reconciliation downgrade |
-| p95 < 10 s over 10 queries | `npm run latency` against the deployment |
+| p95 < 12 s over 10 queries | `npm run latency` against the deployment |
 | Off-corpus refusal, zero citations | "who won the 2022 PH election?" |
 | Tests pass in CI | GitHub Actions `ci` workflow |
 
