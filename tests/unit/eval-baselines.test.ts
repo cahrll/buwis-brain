@@ -18,5 +18,6 @@ describe("committed baselines", () => {
     expect(parsed.data.provenance.partial).not.toBe(true);
     expect(parsed.data.provenance.rescoredFrom).toBeNull();
     expect(parsed.data.rows.length).toBe(parsed.data.provenance.questionCount * parsed.data.provenance.runs);
+    expect(parsed.data.aggregates.counts.errorRate ?? 0).toBeLessThan(0.05);
   });
 });
