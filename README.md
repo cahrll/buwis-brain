@@ -116,14 +116,82 @@ text to extract.
 | Off-corpus refusal, zero citations | "who won the 2022 PH election?" |
 | Tests pass in CI | GitHub Actions `ci` workflow |
 
+## Eval harness
+
+The harness drives the deployed API end to end over a committed question
+bank and writes one self-describing JSON per run. It is an API client
+only: nothing under `evals/` imports from `src/`, and the metrics are
+computed by a pure scorer that CI tests against fixtures, so a run needs
+a live deployment but CI never needs the network.
+
+```bash
+EVAL_TARGET_URL=https://<deployment> npm run eval                # test split, 3 runs
+EVAL_TARGET_URL=https://<deployment> npm run eval -- --runs 1 --split dev
+npm run eval:score -- evals/results/<file>.json                  # re-score without re-running
+```
+
+The bank (`evals/bank/`) has 48 questions labeled with a category, the
+expected behavior (`answer`, `refuse`, `either`), the documents that
+should be retrieved, and a dev/test split. Categories cover on-corpus
+questions per agency, questions answerable only deep in the NIRC,
+corpus-currency traps, far and near-domain off-corpus questions, and
+borderline phrasings.
+
+Every results file carries provenance (timestamp, target URL, git
+commit, bank hash, a snapshot of the corpus from `/api/stats`) and the
+raw rows for every question and run, so any number in it can be traced
+back without re-running. A named baseline is written with
+`--baseline <label>`; the CLI refuses that when the tree is dirty or the
+run was interrupted, and a test enforces the same on every committed
+file.
+
+What the aggregates measure: retrieval hit rate is scored from the
+diagnostic top 8, not from citations, so it isolates retrieval from
+synthesis. Refusal rates split gate refusals from model refusals, which
+is how the floor question gets a number. Stability runs every question
+three times, sequentially, and reports how often the behavior agreed.
+Cost comes from the token usage the API reports, priced per model.
+
+### Baseline, 2026-08-31, production
+
+| Metric | Value |
+|---|---|
+| Retrieval hit rate (any expected doc in top 8) | 97% |
+| Correct-refusal rate on off-corpus questions | 100% |
+| Off-corpus questions that reached the model | 100% |
+| False-refusal rate on on-corpus questions | 4% |
+| Behavior stability over 3 runs | 97% |
+| Server latency p95 | 8.3 s |
+| Questions with any keyword-leg chunk in the top 8 | 20% |
+| Cost of the run | $3.97 |
+
+Unstable questions in the baseline: philhealth-self-earning-04.
+The full file is `evals/baselines/2026-08-31-production.json`.
+
+### Corpus-currency traps
+
+These questions get a faithful answer from the corpus that is stale in
+2026. The baseline scores them as behavior only (answered, expected
+document hit); whether the answer discloses the staleness is the next
+stage's job.
+
+| Question | Superseded by | Since | What changed |
+|---|---|---|---|
+| Do I have to pay the 500 peso annual registration fee every January? | RA 11976 (Ease of Paying Taxes Act) | 2024-01-22 | annual registration fee under Section 236(B) abolished |
+| Do I need to issue official receipts for my professional fees? | RA 11976 (Ease of Paying Taxes Act) | 2024-01-22 | invoices replace official receipts as the primary document for sales of services under Section 237 |
+| What is the maximum monthly Pag-IBIG contribution for an employee? | HDMF Circular No. 460 | 2024-02-01 | monthly fund salary cap raised from 5,000 to 10,000 pesos, doubling the maximum member share from 100 to 200 pesos |
+| What was the PhilHealth premium rate for 2023? | Malacañang memorandum (ES Bersamin, 2023-01-02), affirmed by PhilHealth board 2023-01-04 | 2023-01-01 | 2023 premium rate held at 4% instead of the scheduled 4.5% |
+| What was the percentage tax rate for a non-VAT freelancer in 2022? | RA 11534 (CREATE Act) | 2020-07-01 | Section 116 percentage tax temporarily reduced from 3% to 1% until 2023-06-30; corpus states the 3% that applied before and after |
+
 ## Deliberate limitations
 
-Single-shot Q&A only, no multi-turn. No reranker and no eval harness
-yet, the diagnostics hooks are already in place for it. The UI stays
-unstyled until the design pass. Embeddings are fixed at 1536
-dimensions, migrations are manual and there is no rate limiting. The
-refusal floor is hand-tuned until the eval sweep, and the final answer
-model gets revisited with the eval harness as well.
+Single-shot Q&A only, no multi-turn. No reranker. The eval harness
+measures the system but does not yet judge answer faithfulness or
+trace requests; those are the next stage. The UI stays unstyled until
+the design pass. Embeddings are fixed at 1536 dimensions, migrations
+are manual and there is no rate limiting. The refusal floor is
+hand-tuned until the eval sweep, and the final answer model gets
+revisited with the eval harness as well.
 
-The goal of this milestone is a small core that works and can be
-measured. The eval harness comes next.
+The core is small, works, and now has a measured baseline. Retrieval
+changes come next, each one compared against that baseline.
