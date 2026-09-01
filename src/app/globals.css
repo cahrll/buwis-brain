@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@theme {
+  --color-*: initial;
+  --color-enamel-yellow: #f7b90d;
+  --color-yellow-pressed: #e0a70a;
+  --color-cream-pinstripe: #fff3cd;
+  --color-butter-wash: #fff6da;
+  --color-quote-cream: #fffbef;
+  --color-yellow-shade: #7c5a00;
+  --color-route-blue: #1856a7;
+  --color-blue-pinstripe: #cfe0f4;
+  --color-signal-red: #c8232a;
+  --color-red-pressed: #a81b21;
+  --color-red-pinstripe: #e9938f;
+  --color-red-tint: #ffd9d5;
+  --color-asphalt-night: #15171b;
+  --color-asphalt-lift: #23262c;
+  --color-signboard-ink: #1d1f24;
+  --color-enamel-white: #fdfdf8;
+  --color-reading-soft: #3c3e44;
+  --color-asphalt-muted: #5b5e66;
+  --color-steel-mist: #9fa3ab;
+  --color-dusk-text: #c9ccd2;
+  --color-roadbed-gray: #e6e7e2;
+  --color-white: #ffffff;
+
+  --font-slab: var(--font-alfa-slab), Georgia, serif;
+  --font-barlow: var(--font-barlow), system-ui, sans-serif;
+  --font-condensed: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
+
+  --radius-badge: 6px;
+  --radius-field: 7px;
+  --radius-box: 8px;
+  --radius-control: 9px;
+  --radius-strip: 10px;
+  --radius-board: 12px;
+
+  --shadow-*: initial;
+  --shadow-board-hang: 0 16px 28px -14px rgb(0 0 0 / 0.8);
+  --shadow-topboard-hang: 0 14px 24px -12px rgb(0 0 0 / 0.8);
+  --shadow-route-hang: 0 10px 20px -12px rgb(0 0 0 / 0.8);
+  --shadow-strip-hang: 0 10px 18px -10px rgb(0 0 0 / 0.8);
+  --shadow-chip-hang: 0 8px 14px -8px rgb(0 0 0 / 0.8);
+
+  --inset-shadow-*: initial;
+  --inset-shadow-enamel-cream: inset 0 0 0 3px var(--color-cream-pinstripe);
+  --inset-shadow-enamel-cream-thin: inset 0 0 0 2px var(--color-cream-pinstripe);
+  --inset-shadow-enamel-white: inset 0 0 0 3px var(--color-white);
+  --inset-shadow-enamel-blue: inset 0 0 0 2px var(--color-blue-pinstripe);
+  --inset-shadow-enamel-red: inset 0 0 0 3px var(--color-red-pinstripe);
+  --inset-shadow-answer: inset 0 0 0 3px var(--color-white), inset 0 0 0 5px var(--color-blue-pinstripe);
+
+  --text-shadow-*: initial;
+  --text-shadow-brand: 2px 2px 0 var(--color-signal-red), 4px 4px 0 rgb(0 0 0 / 0.28);
+  --text-shadow-paint: 1px 1px 0 rgb(0 0 0 / 0.12);
+  --text-shadow-paint-deep: 1px 1px 0 rgb(0 0 0 / 0.3);
+  --text-shadow-paint-heavy: 2px 2px 0 rgb(0 0 0 / 0.35);
+  --text-shadow-asphalt: 2px 2px 0 rgb(0 0 0 / 0.5);
+
+  --tracking-brand: 0.02em;
+  --tracking-chip: 0.03em;
+  --tracking-slab: 0.04em;
+  --tracking-title: 0.05em;
+  --tracking-ghost: 0.14em;
+  --tracking-strap-tight: 0.18em;
+  --tracking-label: 0.2em;
+  --tracking-route: 0.24em;
+  --tracking-strap: 0.26em;
+  --tracking-micro: 0.28em;
+
+  --breakpoint-road: 31.25rem;
+
+  --animate-drive: drive 1s linear infinite;
+  --animate-drive-fill: drive-fill 1s linear infinite;
+
+  @keyframes drive {
+    to {
+      transform: translateX(44px);
+    }
+  }
+  @keyframes drive-fill {
+    to {
+      transform: translateX(28px);
+    }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-asphalt-night);
+    background-image: radial-gradient(120% 90% at 50% 0%, var(--color-asphalt-lift), var(--color-asphalt-night) 70%);
+    background-attachment: fixed;
+    font-family: var(--font-barlow);
+    color: var(--color-signboard-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-enamel-yellow);
+    color: var(--color-signboard-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-enamel-yellow);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .roadline {
+    position: relative;
+    height: 14px;
+    max-width: 68ch;
+    overflow: hidden;
+    border-radius: 7px;
+    background: var(--color-signboard-ink);
+  }
+  .roadline::after {
+    content: "";
+    position: absolute;
+    inset: 5px 0 5px -44px;
+    background: repeating-linear-gradient(90deg, var(--color-enamel-yellow) 0 22px, transparent 22px 44px);
+    animation: var(--animate-drive);
+  }
+
+  .road-track {
+    margin-top: 8px;
+    height: 16px;
+    max-width: 56ch;
+    overflow: hidden;
+    border: 2px solid var(--color-signboard-ink);
+    border-radius: 8px;
+    background: var(--color-roadbed-gray);
+  }
+  .road-fill {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-signboard-ink);
+  }
+  .road-fill::after {
+    content: "";
+    position: absolute;
+    inset: 6px 0 6px -28px;
+    background: repeating-linear-gradient(90deg, var(--color-enamel-yellow) 0 14px, transparent 14px 28px);
+    animation: var(--animate-drive-fill);
+  }
+
+  .hazard-top::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 14px;
+    background: repeating-linear-gradient(-45deg, var(--color-enamel-yellow) 0 16px, var(--color-signboard-ink) 16px 32px);
+  }
+}
